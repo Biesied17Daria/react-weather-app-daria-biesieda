@@ -3,6 +3,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
+      <div className='container'>
       <h1>
         Wearher App
         </h1>
@@ -14,6 +15,7 @@ function App() {
       open-sourced on GitHub
       </a>
     </footer>
+    </div>
     </div>
   );
 }

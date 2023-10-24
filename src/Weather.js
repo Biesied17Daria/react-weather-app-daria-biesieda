@@ -51,7 +51,7 @@ export default function Weather() {
                         <img
                             src='https://static.vecteezy.com/system/resources/previews/005/362/115/original/smiling-cloud-kawaii-character-blue-object-of-sky-symbol-of-cloudy-weather-mascot-of-weather-forecast-cute-cartoon-illustration-vector.jpg'
                             alt='Cloudy' />
-                        <span className='temperature'>{temperature}</span>
+                        <span className='temperature'>{Math.round(temperature)}</span>
                         <span className='unit'>°С</span>
                     </div>
                     <div className='col-6'>

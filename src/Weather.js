@@ -2,23 +2,32 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './Weather.css';
 
-export default function Weather() {
-  const [ready, setReady] = useState(false);
-  const [temperature, setTemperature] = useState(null);
+export default function Weather(props) {
+ 
+  const [weatherData, setWeatherData] = useState({ready: false});
   const [city, setCity] = useState('Lisbon');
 
   useEffect(() => {
     const apiKey = 'b1413ed7e08bdb32f52c4b761d92a978';
-    const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
-
+    const apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
+      
     axios.get(apiUrl).then((response) => {
-      console.log(response.data);
-      setTemperature(response.data.main.temp);
-      setReady(true);
+      setWeatherData ({
+        ready: true,
+        temperature: response.data.main.temp,
+        description: response.data.weather[0].description,
+        date: 'Wednesday 03:00',
+        iconUrl: 'https://img.freepik.com/free-vector/hand-drawn-chuva-de-amor-decoration-element-collection_23-2148919613.jpg?size=626&ext=jpg',
+        humidity: response.data.main.humidity,
+        wind: response.data.wind.speed,
+        city: response.data.name
+    })
+
     });
+
   }, [city]);
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className='Weather'>
         { <><form>
@@ -38,32 +47,29 @@ export default function Weather() {
                     </div>
                 </div>
             </form><h1>
-                    Lisbon
+                    {weatherData.city}
                 </h1><ul>
                     <li>
-                        Monday 3:00
+                        {weatherData.date}
                     </li>
-                    <li>
-                        Cloudy
+                    <li className='text-capitalize'>
+                        {weatherData.description}
                     </li>
                 </ul><div className='row mt-3'>
                     <div className='col-6'>
                         <img
-                            src='https://static.vecteezy.com/system/resources/previews/005/362/115/original/smiling-cloud-kawaii-character-blue-object-of-sky-symbol-of-cloudy-weather-mascot-of-weather-forecast-cute-cartoon-illustration-vector.jpg'
-                            alt='Cloudy' />
-                        <span className='temperature'>{Math.round(temperature)}</span>
+                            src={weatherData.iconUrl}
+                            alt={weatherData.description} />
+                        <span className='temperature'>{Math.round(weatherData.temperature)}</span>
                         <span className='unit'>°С</span>
                     </div>
                     <div className='col-6'>
                         <ul>
                             <li>
-                                Precipitation: 15%
+                                Humidity: {weatherData.humidity}%
                             </li>
                             <li>
-                                Humidity: 13%
-                            </li>
-                            <li>
-                                Wind: 7 km/h
+                                Wind: {weatherData.wind} km/h
                             </li>
                         </ul>
                     </div>

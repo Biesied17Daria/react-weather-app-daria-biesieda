@@ -1,0 +1,12 @@
+body {
+    background-color: #9AACA4;
+}
+.App {
+    max-width: 650px;
+    margin: 30px auto;
+}
+
+.App footer {
+    font-size: 11px;
+    margin: 10px 0;
+}

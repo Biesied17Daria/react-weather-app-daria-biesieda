@@ -9,15 +9,16 @@ export default function Weather (){
     <div className='col-9'>
     <input 
     type='search' 
-    placeholder='Search your city, dattebayo!'
+    placeholder='Search your city...'
     className='form-control'
+    autoFocus='on'
     />
     </div>
     <div className='col-3'>
     <input 
     type='submit'
     value='Search'
-    className='btn btn-primary'
+    className='btn btn-primary w-100'
     />
     </div>
 </div>
@@ -33,12 +34,14 @@ export default function Weather (){
                 Cloudy
                 </li>
     </ul>
-    <div className='row'>
+    <div className='row mt-3' >
         <div className='col-6'>
             <img 
-            src='https://phonoteka.org/uploads/posts/2021-06/1624886766_19-phonoteka_org-p-krasnie-oblaka-akatsuki-oboi-krasivo-19.jpg'
-            alt='Cloudy' width={100} />
-            6°С
+            src='https://static.vecteezy.com/system/resources/previews/005/362/115/original/smiling-cloud-kawaii-character-blue-object-of-sky-symbol-of-cloudy-weather-mascot-of-weather-forecast-cute-cartoon-illustration-vector.jpg'
+            alt='Cloudy' 
+            />
+            <span className='temperature'>6</span>
+            <span className='unit'>°С</span>  
         </div>
         <div className='col-6'>
             <ul>

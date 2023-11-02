@@ -38,6 +38,7 @@ list-style: none;
     font-size: 64px;
     line-height: 64px;
     font-weight: 400;
+    
 }
 
 .Weather .unit {
@@ -46,4 +47,5 @@ list-style: none;
     position: relative;
     line-height: 1;
     top: -34px;
+    margin-left: 5px;
 }

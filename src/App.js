@@ -8,7 +8,7 @@ function App() {
     <footer>
       This project was coded by <a href='https://deft-narwhal-77936b.netlify.app/' target='_blank'>Daria Biesieda</a>  and is {" "}
     <a href='https://github.com/Biesied17Daria/react-weather-app-daria-biesieda'
-    target='_blank'>
+    target='_blank' rel='noreferrer'>
       open-sourced on GitHub
       </a>
     </footer>

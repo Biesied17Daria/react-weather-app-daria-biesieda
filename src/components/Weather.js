@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import WeatherForecast from "./WeatherForecast";
+import WeatherForecast from "../components/WeatherForecast";
 import WeatherInfo from "./WeatherInfo";
 import axios from "axios";
-import "./Weather.css";
+import "../styles/Weather.css";
 
 export default function Weather(props) {
   const [weatherData, setWeatherData] = useState({ ready: false });

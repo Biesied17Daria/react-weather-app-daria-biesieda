@@ -4,11 +4,11 @@ import axios from "axios";
 import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
-  let [loaded, setLoaded] = useState(false);
-  let [forecast, setForecast] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  const [forecast, setForecast] = useState(null);
 
   useEffect(() => {
-    setLoaded(false);
+    load();
   }, [props.coordinates]);
 
   function handleResponse(response) {
@@ -17,13 +17,18 @@ export default function WeatherForecast(props) {
   }
 
   function load() {
-    const apiKey = process.env.REACT_APP_API_KEY;
-    let longitude = props.coordinates.lon;
-    let latitude = props.coordinates.lat;
-    let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+  const apiKey = process.env.REACT_APP_API_KEY;
+  let longitude = props.coordinates.lon;
+  let latitude = props.coordinates.lat;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
 
-    axios.get(apiUrl).then(handleResponse);
-  }
+  axios.get(apiUrl)
+    .then(handleResponse)
+    .catch(error => {
+      console.error("Error fetching forecast data from API:", error);
+      setLoaded(true); // Ensure that the component doesn't remain in a loading state
+    });
+}
 
   if (loaded) {
     console.log(forecast);

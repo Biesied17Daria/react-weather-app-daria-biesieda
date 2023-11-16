@@ -9,6 +9,7 @@ export default function Weather(props) {
   const [city, setCity] = useState(props.defaultCity);
 
   function handleResponse(response) {
+    console.log("API Response:", response.data);
     setWeatherData({
       ready: true,
       coordinates: response.data.coord,
@@ -32,12 +33,19 @@ export default function Weather(props) {
   }
 
   function search() {
-    let apiKey = process.env.REACT_APP_API_KEY;
-    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}}&appid=${apiKey}&units=metric`;
-
-    axios.get(apiUrl).then(handleResponse);
+    const apiKey = process.env.REACT_APP_API_KEY;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  
+    console.log("API Request URL:", apiUrl);
+    axios.get(apiUrl)
+      .then(handleResponse)
+      .catch(error => {
+        console.error("Error fetching data from API:", error);
+        console.log("Full error object:", error);
+        setWeatherData({ ready: false, error: true });
+      });
   }
-
+  
   if (weatherData.ready) {
     return (
       <div className="Weather">
@@ -65,8 +73,10 @@ export default function Weather(props) {
         <WeatherForecast coordinates={weatherData.coordinates} />
       </div>
     );
+  } else if (weatherData.error) {
+    return "Не удалось загрузить данные.";
   } else {
-    search();
-    return "Loading...";
+    // Вызывать search только после отправки формы
+    return "Загрузка...";
   }
-}
+  }

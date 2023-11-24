@@ -4,7 +4,7 @@ import axios from "axios";
 import WeatherForecastDay from "./WeatherForecastDay";
 
 export default function WeatherForecast(props) {
-  const [loaded, setLoaded] = useState(false);
+//const [loaded, setLoaded] = useState(false);
   const [forecast, setForecast] = useState(null);
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export default function WeatherForecast(props) {
     setForecast(response.data.daily);
     setLoaded(true);
   }
-  
+
   const filteredForecast = forecast.slice(0, 6);
 
   return (

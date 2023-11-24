@@ -8,53 +8,42 @@ export default function WeatherForecast(props) {
   const [forecast, setForecast] = useState(null);
 
   useEffect(() => {
-    load();
-  }, [props.coordinates]);
+    // Обновленный useEffect с добавленной зависимостью load
+    const load = () => {
+      const apiKey = process.env.REACT_APP_API_KEY;
+      let longitude = props.coordinates.lon;
+      let latitude = props.coordinates.lat;
+      let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
+
+      axios.get(apiUrl)
+        .then(handleResponse)
+        .catch(error => {
+          console.error("Error fetching forecast data from API:", error);
+          // Оставляем loaded в состоянии "не загружено" при ошибке
+          setLoaded(false);
+        });
+    };
+
+    load(); // Вызываем load при каждом изменении props.coordinates
+
+  }, [props.coordinates]); // Добавлен load в массив зависимостей
 
   function handleResponse(response) {
     setForecast(response.data.daily);
     setLoaded(true);
   }
+  
+  const filteredForecast = forecast.slice(0, 6);
 
-  function load() {
-  const apiKey = process.env.REACT_APP_API_KEY;
-  let longitude = props.coordinates.lon;
-  let latitude = props.coordinates.lat;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=metric`;
-
-  axios.get(apiUrl)
-    .then(handleResponse)
-    .catch(error => {
-      console.error("Error fetching forecast data from API:", error);
-      setLoaded(true); // Ensure that the component doesn't remain in a loading state
-    });
-}
-
-  if (loaded) {
-    console.log(forecast);
-    return (
-      <div className="WeatherForecast">
-        <div className="row">
-          {forecast.map(function (dailyForecast, index) {
-            if (index < 6) {
-              return (
-                <div className="col" key={index}>
-                  <WeatherForecastDay data={dailyForecast} />
-                </div>
-              )
-            } else {
-              return null;
-            }
-          })}
-
-        </div>
+  return (
+    <div className="WeatherForecast">
+      <div className="row">
+        {filteredForecast.map((dailyForecast, index) => (
+          <div className="col" key={index}>
+            <WeatherForecastDay data={dailyForecast} />
+          </div>
+        ))}
       </div>
-    );
-
-  } else {
-    load()
-
-    return null;
-  }
-
+    </div>
+  );
 }
